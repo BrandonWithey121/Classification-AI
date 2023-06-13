@@ -17,14 +17,14 @@ def predict_image(image):
     predicted_class = np.argmax(prediction)
     return class_names[predicted_class]
 
-    @app.route('/predict', methods=['POST'])
-    def predict():
-        file = request.files['file'] # get the file
-        image = Image.open(file).convert('L') # convert image to grayscale
-        image = image.resize((28, 28)) # resize image to 28x28
-        image = np.array(image) / 255.0 # normalize the pixel values
-        prediction = predict_image(image)
-        return render_template('prediction.html', prediction=prediction)
+@app.route('/predict', methods=['POST'])
+def predict():
+    file = request.files['file'] # get the file
+    image = Image.open(file).convert('L') # convert image to grayscale
+    image = image.resize((28, 28)) # resize image to 28x28
+    image = np.array(image) / 255.0 # normalize the pixel values
+    prediction = predict_image(image)
+    return render_template('prediction.html', prediction=prediction)
 
 if __name__ == "__main__": 
     app.run(debug=True)
